@@ -39,6 +39,11 @@ public class TestUserService {
         acctUser.setTelephone("13022221111");  
         String id = userService.save(acctUser);  
         LOGGER.info(JSON.toJSONString(id));  
-    }  
+    }
+    @Test
+    public void query(){
+        AcctUser acctUser = userService.get("14ff5253-5912-4a3f-b51b-f50d9da0271d");
+        LOGGER.info(JSON.toJSONString(acctUser));
+    }
   
 }  
