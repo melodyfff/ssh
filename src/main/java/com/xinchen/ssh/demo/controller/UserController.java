@@ -2,10 +2,9 @@ package com.xinchen.ssh.demo.controller;
 
 import java.util.List;
 
+import com.xinchen.ssh.core.exception.ApplicationException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.xinchen.ssh.demo.entity.AcctUser;
@@ -24,7 +23,7 @@ public class UserController {
 	private static final Logger LOGGER = Logger.getLogger(UserController.class);
 
 	@Autowired
-	private UserService userService;
+	private transient UserService userService;
 
 	@GetMapping("/showInfos")
 	public  List<AcctUser> showUserInfos() {
@@ -38,6 +37,16 @@ public class UserController {
 		LOGGER.info("查询用户：" + userId);
 		AcctUser userInfo = userService.get(userId);
 		return userInfo;
+	}
+
+	@GetMapping("/exception")
+	public void testException() throws ApplicationException{
+		throw new ApplicationException("test");
+	}
+
+	@GetMapping("/sysException")
+	public void testSystemException() throws Exception{
+		throw new Exception("hello");
 	}
 
 }
