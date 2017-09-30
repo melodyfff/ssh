@@ -105,7 +105,9 @@ public class AcctUser implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER)
 //	@ManyToMany(fetch = FetchType.LAZY)
 	@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-	@JoinTable(name = "acct_user_role", catalog = "ssh", joinColumns = { @JoinColumn(name = "user_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "role_id", nullable = false, updatable = false) })
+	@JoinTable(name = "acct_user_role", catalog = "ssh",
+			joinColumns = { @JoinColumn(name = "user_id", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "role_id", nullable = false, updatable = false) })
 	public Set<AcctRole> getAcctRoles() {
 		return this.acctRoles;
 	}

@@ -69,7 +69,9 @@ public class AcctAuthority implements Serializable {
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "acct_role_authority", catalog = "ssh", joinColumns = { @JoinColumn(name = "authority_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "role_id", nullable = false, updatable = false) })
+	@JoinTable(name = "acct_role_authority", catalog = "ssh",
+			joinColumns = { @JoinColumn(name = "authority_id", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "role_id", nullable = false, updatable = false) })
 	public Set<AcctRole> getAcctRoles() {
 		return this.acctRoles;
 	}
