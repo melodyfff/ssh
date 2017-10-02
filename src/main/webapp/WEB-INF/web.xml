@@ -4,9 +4,10 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 	<display-name>ssh</display-name>
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring-base.xml,classpath:spring-hibernate.xml</param-value>
+		<param-value>classpath:ssh-context.xml</param-value>
 	</context-param>
 
 	<filter>
@@ -38,27 +39,31 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 
+	<!--spring mvc 配置-->
 	<servlet>
 		<description>spring mvc servlet</description>
-		<servlet-name>rest</servlet-name>
+		<servlet-name>dispatcherServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<!-- 此处配置的是SpringMVC的配置文件 -->
-			<param-value>classpath:spring-mvc.xml</param-value>
+			<param-value>classpath:ssh-mvc.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>rest</servlet-name>
+		<servlet-name>dispatcherServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 <!-- 	<servlet-mapping>
 		<servlet-name>rest</servlet-name>
 		<url-pattern>*.htmls</url-pattern>
 	</servlet-mapping> -->
+
+
 	<!-- openSessionInView配置 作用是延迟session关闭到view层 -->
+	<!--解决报错：could not initialize proxy - no Session-->
 	<filter>
 		<filter-name>openSessionInViewFilter</filter-name>
 		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>

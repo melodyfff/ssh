@@ -3,9 +3,14 @@ package com.xinchen.ssh.test.demo;
 
 import com.xinchen.ssh.core.exception.ApplicationException;
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -20,14 +25,18 @@ import com.xinchen.ssh.demo.service.UserService;
 * @version V1.0   
 */
 @RunWith(SpringJUnit4ClassRunner.class)  
-@ContextConfiguration(locations = {"classpath*:spring-*.xml"})  
+@ContextConfiguration(locations = {"classpath:ssh-context.xml"})
 public class TestUserService {  
   
     private static final Logger LOGGER = Logger  
             .getLogger(TestUserService.class);  
   
     @Autowired  
-    private UserService userService;  
+    private UserService userService;
+
+    @Autowired
+    @Qualifier("sessionFactory")
+    private SessionFactory sessionFactory;
   
 //    @Test
 //    public void save() {
@@ -41,7 +50,7 @@ public class TestUserService {
 //    }
     @Test
     public void query(){
-        AcctUser acctUser = userService.get("14ff5253-5912-4a3f-b51b-f50d9da0271d");
+        AcctUser acctUser = userService.load("6e5afb1d-50e1-45fe-b6fe-b9e399415387");
         LOGGER.info(JSON.toJSONString(acctUser));
     }
     @Test
@@ -52,6 +61,23 @@ public class TestUserService {
             LOGGER.error(e);
             throw new ApplicationException(e);
         }
+    }
+    @Test
+    public void test(){
+        Session session = sessionFactory.openSession();
+
+        Transaction transaction = session.beginTransaction();
+
+        com.xinchen.ssh.demo.entity.Test test1 = new com.xinchen.ssh.demo.entity.Test();
+        test1.setName("test");
+        test1.setEmail("20");
+
+        session.persist(test1);
+
+        transaction.commit();
+
+        session.close();
+
     }
   
 }  
