@@ -70,7 +70,7 @@
     <!--屏蔽所有org.springframework.*输出的Debug（及以下）信息-->
     <logger name="org.springframework" >  <!--  additivity="false" 不在控制台输出-->
         <level value="INFO"></level>
-        <appender-ref ref="consoleAppender" />
+        <!--<appender-ref ref="consoleAppender" />-->
     </logger>
 
     <root>
