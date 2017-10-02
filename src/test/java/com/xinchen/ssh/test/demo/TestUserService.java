@@ -2,6 +2,9 @@ package com.xinchen.ssh.test.demo;
 
 
 import com.xinchen.ssh.core.exception.ApplicationException;
+import com.xinchen.ssh.demo.dao.IUserDao;
+import com.xinchen.ssh.demo.entity.Role;
+import com.xinchen.ssh.demo.entity.User;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,6 +20,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.alibaba.fastjson.JSON;
 import com.xinchen.ssh.demo.entity.AcctUser;
 import com.xinchen.ssh.demo.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**   
 * @Description: 
@@ -35,6 +43,9 @@ public class TestUserService {
     private UserService userService;
 
     @Autowired
+    private IUserDao userDao;
+
+    @Autowired
     @Qualifier("sessionFactory")
     private SessionFactory sessionFactory;
   
@@ -49,8 +60,9 @@ public class TestUserService {
 //        LOGGER.info(JSON.toJSONString(id));
 //    }
     @Test
+    @Transactional
     public void query(){
-        AcctUser acctUser = userService.load("6e5afb1d-50e1-45fe-b6fe-b9e399415387");
+        AcctUser acctUser = userService.get("14ff5253-5912-4a3f-b51b-f50d9da0271d");
         LOGGER.info(JSON.toJSONString(acctUser));
     }
     @Test
@@ -63,21 +75,34 @@ public class TestUserService {
         }
     }
     @Test
-    public void test(){
-        Session session = sessionFactory.openSession();
 
-        Transaction transaction = session.beginTransaction();
+    public void test3(){
 
-        com.xinchen.ssh.demo.entity.Test test1 = new com.xinchen.ssh.demo.entity.Test();
-        test1.setName("test");
-        test1.setEmail("20");
+        List<Role> list = new ArrayList<>();
 
-        session.persist(test1);
+        Role role = new Role();
+        role.setId(1);
+        role.setRoleName("admin");
+        list.add(role);
 
-        transaction.commit();
+        User user = new User();
 
-        session.close();
+        user.setRegistrTime(new Date());
+        user.setUserName("test");
+        user.setPassword("test");
+        user.setRoleList(list);
+
+        userDao.saveUser(user);
 
     }
-  
+
+    @Test
+    @Transactional
+    public void test4(){
+
+
+        System.out.println(userDao.getUser(2L));
+
+    }
+
 }  
