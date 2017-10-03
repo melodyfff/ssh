@@ -18,10 +18,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.alibaba.fastjson.JSON;
-import com.xinchen.ssh.demo.entity.AcctUser;
-import com.xinchen.ssh.demo.service.UserService;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -37,9 +33,6 @@ public class TestUserService {
   
     private static final Logger LOGGER = Logger  
             .getLogger(TestUserService.class);  
-  
-    @Autowired  
-    private UserService userService;
 
     @Autowired
     private IUserDao userDao;
@@ -58,21 +51,6 @@ public class TestUserService {
 //        String id = userService.save(acctUser);
 //        LOGGER.info(JSON.toJSONString(id));
 //    }
-    @Test
-    @Transactional
-    public void query(){
-        AcctUser acctUser = userService.get("14ff5253-5912-4a3f-b51b-f50d9da0271d");
-        LOGGER.info(JSON.toJSONString(acctUser));
-    }
-    @Test
-    public void testException() throws Exception {
-        try {
-            int a  = 1/0;
-        }catch (RuntimeException e){
-            LOGGER.error(e);
-            throw new ApplicationException(e);
-        }
-    }
     @Test
 
     public void test3(){

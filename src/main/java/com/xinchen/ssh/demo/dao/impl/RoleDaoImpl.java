@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-@Repository("iroleDao")
-public class IRoleDaoImpl implements IRoleDao {
+@Repository("roleDao")
+public class RoleDaoImpl implements IRoleDao {
 
     @Autowired
     private SessionFactory sessionFactory;
