@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository("iuserDao")
 public class IUserDaoImpl implements IUserDao {
     @Autowired
@@ -18,12 +20,38 @@ public class IUserDaoImpl implements IUserDao {
     }
 
     @Override
-    public User getUser(Long id) {
+    public User get(Long id) {
         return (User) getCurrentSession().get(User.class,id);
     }
 
     @Override
-    public void saveUser(User user) {
+    public void save(User user) {
         getCurrentSession().save(user);
     }
+
+    @Override
+    public void update(User user) {
+        getCurrentSession().update(user);
+    }
+
+    @Override
+    public void saveOrUpdate(User entity) {
+        getCurrentSession().saveOrUpdate(entity);
+    }
+
+    @Override
+    public void delete(User user) {
+        getCurrentSession().delete(user);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        getCurrentSession().delete(id);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return getCurrentSession().createQuery("from User").list();
+    }
+
 }

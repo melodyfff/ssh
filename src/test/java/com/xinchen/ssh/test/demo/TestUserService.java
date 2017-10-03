@@ -3,6 +3,7 @@ package com.xinchen.ssh.test.demo;
 
 import com.xinchen.ssh.core.exception.ApplicationException;
 import com.xinchen.ssh.demo.dao.IUserDao;
+import com.xinchen.ssh.demo.entity.Authority;
 import com.xinchen.ssh.demo.entity.Role;
 import com.xinchen.ssh.demo.entity.User;
 import org.apache.log4j.Logger;
@@ -22,9 +23,7 @@ import com.xinchen.ssh.demo.entity.AcctUser;
 import com.xinchen.ssh.demo.service.UserService;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**   
 * @Description: 
@@ -78,30 +77,50 @@ public class TestUserService {
 
     public void test3(){
 
-        List<Role> list = new ArrayList<>();
+        Authority authority = new Authority();
+        authority.setId(1L);
+        authority.setAuthorityName("管理员权限");
+
+        Set<Authority> authorityList = new HashSet<>();
+        authorityList.add(authority);
+
+        Set<Role> list = new HashSet<>();
 
         Role role = new Role();
-        role.setId(1);
-        role.setRoleName("admin");
+        role.setId(2);
+        role.setRoleName("users");
+        role.setAuthorityList(authorityList);
         list.add(role);
 
         User user = new User();
 
         user.setRegistrTime(new Date());
-        user.setUserName("test");
-        user.setPassword("test");
+        user.setUserName("admin");
+        user.setPassword("test3");
         user.setRoleList(list);
 
-        userDao.saveUser(user);
+        userDao.save(user);
 
     }
 
     @Test
-    @Transactional
     public void test4(){
 
+        Role role = new Role();
+        role.setId(2);
+        role.setRoleName("users");
 
-        System.out.println(userDao.getUser(2L));
+
+
+        User user = userDao.get(25L);
+        System.out.println(user);
+//        user.getRoleList().add(role);
+//        user.setUserName("admin");
+//        user.getRoleList().get(0).setId(1);
+//        user.getRoleList().get(0).setRoleName("admin");
+//        userDao.updateUser(user);
+//        userDao.saveOrUpdate(user);
+//        System.out.println(userDao.findAll());
 
     }
 
