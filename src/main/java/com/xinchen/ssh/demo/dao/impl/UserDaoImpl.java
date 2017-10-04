@@ -54,4 +54,9 @@ public class UserDaoImpl implements IUserDao {
         return getCurrentSession().createQuery("from User").list();
     }
 
+    @Override
+    public List<User> getByName(String userame) {
+        String sql = "from User where user_name = :username";
+        return getCurrentSession().createQuery(sql).setParameter("username",userame).list();
+    }
 }

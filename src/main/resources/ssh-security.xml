@@ -7,24 +7,29 @@
 	http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/admin**" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/admin**" access="hasRole('ROLE_admin')" />
+        <!--authentication-success-handler-ref="customSuccessHandler"-->
         <form-login
                 login-page="/login"
                 default-target-url="/welcome"
+
                 authentication-failure-url="/login?error"
                 username-parameter="username"
                 password-parameter="password" />
         <logout logout-url="/j_spring_security_logout" logout-success-url="/login?logout" />
         <!-- enable csrf protection -->
         <csrf/>
+
+        <!--无权访问403页面-->
+        <access-denied-handler error-page="/403.jsp"/>
     </http>
 
+
+
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="admin" password="admin" authorities="ROLE_USER" />
-            </user-service>
-        </authentication-provider>
+        <authentication-provider user-service-ref="customUserDetailsService"/>
     </authentication-manager>
+
+    <beans:bean id="customUserDetailsService" class="com.xinchen.ssh.core.security.CustomUserDetailsService" />
 
 </beans:beans>
