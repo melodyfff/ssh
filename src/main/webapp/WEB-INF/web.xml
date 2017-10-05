@@ -42,6 +42,11 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 
+	<!--监听 session 会话个数-->
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+
 	<!--spring mvc 配置-->
 	<servlet>
 		<description>spring mvc servlet</description>

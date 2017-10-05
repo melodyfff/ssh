@@ -12,13 +12,20 @@
         <form-login
                 login-page="/login"
                 default-target-url="/welcome"
-
+                authentication-success-handler-ref="customSuccessHandler"
                 authentication-failure-url="/login?error"
                 username-parameter="username"
                 password-parameter="password" />
-        <logout logout-url="/j_spring_security_logout" logout-success-url="/login?logout" />
+        <logout logout-url="/j_spring_security_logout"
+                logout-success-url="/login?logout"
+                delete-cookies="JSESSIONID" />
         <!-- enable csrf protection -->
         <csrf/>
+
+        <!--session 超时跳转页面-->
+        <session-management invalid-session-url="/login" >
+            <concurrency-control max-sessions="1" />
+        </session-management>
 
         <!--无权访问403页面-->
         <access-denied-handler error-page="/403.jsp"/>

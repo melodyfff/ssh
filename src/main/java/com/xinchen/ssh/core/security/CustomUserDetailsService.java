@@ -1,6 +1,5 @@
 package com.xinchen.ssh.core.security;
 
-import com.xinchen.ssh.core.exception.ApplicationException;
 import com.xinchen.ssh.demo.entity.Role;
 import com.xinchen.ssh.demo.entity.User;
 import com.xinchen.ssh.demo.service.IUserService;
