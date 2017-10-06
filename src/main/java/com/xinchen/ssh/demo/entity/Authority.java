@@ -1,6 +1,7 @@
 package com.xinchen.ssh.demo.entity;
 
 import org.hibernate.annotations.Cascade;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,6 +23,9 @@ public class Authority implements Serializable {
 
     @Column(name = "authority_name",nullable = false)
     private String authorityName;
+
+    @Column(name = "url",nullable = false)
+    private String url;
 
     @ManyToMany(fetch = FetchType.EAGER)
 //    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)//使用hibernate注解级联保存和更新
@@ -54,11 +58,20 @@ public class Authority implements Serializable {
         this.roleList = roleList;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "Authority{" +
                 "id=" + id +
                 ", authorityName='" + authorityName + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

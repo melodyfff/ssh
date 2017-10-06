@@ -1,5 +1,6 @@
 package com.xinchen.ssh.core.security;
 
+import com.xinchen.ssh.demo.entity.Authority;
 import com.xinchen.ssh.demo.entity.Role;
 import com.xinchen.ssh.demo.entity.User;
 import com.xinchen.ssh.demo.service.IUserService;
@@ -13,7 +14,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService{
@@ -28,7 +31,7 @@ public class CustomUserDetailsService implements UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<User> users = userService.load(username);
 
-        LOGGER.info("User login:"+users);
+        LOGGER.info("User login:{}"+users);
 
         if (users == null || users.size()==0){
             LOGGER.info("USER NOT FOUND!");
@@ -41,13 +44,14 @@ public class CustomUserDetailsService implements UserDetailsService{
                 true, true, true, true, getGrantedAuthorities(user));
     }
 
-    private List<GrantedAuthority> getGrantedAuthorities(User user){
+    private Set<GrantedAuthority> getGrantedAuthorities(User user){
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        Set<GrantedAuthority> authorities = new HashSet<>();
 
         for(Role role : user.getRoleList()){
-            LOGGER.info("role : "+role);
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getRoleName()));
+            for (Authority authority:role.getAuthorityList()){
+                authorities.add(new SimpleGrantedAuthority(authority.getAuthorityName()));
+            }
         }
         LOGGER.info("authorities :"+authorities);
         return authorities;
