@@ -6,6 +6,7 @@ import com.xinchen.ssh.demo.dao.IUserDao;
 import com.xinchen.ssh.demo.entity.Authority;
 import com.xinchen.ssh.demo.entity.Role;
 import com.xinchen.ssh.demo.entity.User;
+import com.xinchen.ssh.demo.service.IUserService;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -28,7 +30,7 @@ import java.util.*;
 * @version V1.0   
 */
 @RunWith(SpringJUnit4ClassRunner.class)  
-@ContextConfiguration(locations = {"classpath:ssh-context.xml"})
+@ContextConfiguration(locations = {"classpath*:ssh-*.xml"})
 public class TestUserService {  
   
     private static final Logger LOGGER = Logger  
@@ -36,6 +38,7 @@ public class TestUserService {
 
     @Autowired
     private IUserDao userDao;
+
 
     @Autowired
     @Qualifier("sessionFactory")
@@ -100,6 +103,26 @@ public class TestUserService {
 //        userDao.saveOrUpdate(user);
 //        System.out.println(userDao.findAll());
 
+    }
+
+    @Test
+    public void test5(){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        Set<Role> list = new HashSet<>();
+
+        Role role = new Role();
+        role.setId(2);
+        role.setRoleName("users");
+        list.add(role);
+
+        User user = new User();
+
+        user.setRegistrTime(new Date());
+        user.setUserName("admin2");
+        user.setPassword(passwordEncoder.encode("admin"));
+        user.setRoleList(list);
+
+        userDao.save(user);
     }
 
 }  

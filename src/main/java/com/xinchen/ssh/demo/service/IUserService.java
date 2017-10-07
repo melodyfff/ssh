@@ -8,4 +8,7 @@ public interface IUserService {
 
     List<User> load(String username);
 
+    void save(User user);
+
+    void update(User user);
 }
