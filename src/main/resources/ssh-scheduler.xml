@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+            http://www.springframework.org/schema/task
+            http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <task:annotation-driven executor="quartzTaskExecutor" />
+    <task:executor id="quartzTaskExecutor" keep-alive="900" pool-size="10" queue-capacity="20" />
+
+    <!-- Quartz集群Schduler -->
+    <bean id="clusterQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!-- Triggers集成 -->
+        <property name="triggers">
+            <list>
+                <ref bean="taskOneJobTrigger" />
+            </list>
+        </property>
+        <!-- quartz配置文件路径, 指向cluster配置 -->
+        <property name="configLocation" value="classpath:quartz.properties" />
+        <!-- 启动时延期2秒开始任务 -->
+        <property name="startupDelay" value="2" />
+        <!-- 保存Job数据到数据库所需的数据源 -->
+        <property name="dataSource" ref="dataSource" />
+        <!-- Job接受applicationContext的成员变量名 -->
+        <property name="applicationContextSchedulerContextKey" value="applicationContext" />
+        <!-- 修改job时，更新到数据库 -->
+        <property name="overwriteExistingJobs" value="true" />
+    </bean>
+
+    <!-- 定时任务 -->
+    <bean id="taskOneJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="taskOneJobDetail" />
+        <!-- 每5秒执行一次 -->
+        <property name="cronExpression" value="*/5 * * * * ? " />
+    </bean>
+    <bean id="taskOneJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="durability" value="true" />
+        <property name="jobClass" value="com.xinchen.ssh.demo.job.TaskOneJob" />
+    </bean>
+
+</beans>

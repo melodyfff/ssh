@@ -10,6 +10,7 @@
 		<param-value>
 			classpath:ssh-context.xml
 			classpath:ssh-security.xml
+			classpath:ssh-scheduler.xml
 		</param-value>
 	</context-param>
 
