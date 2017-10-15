@@ -1,13 +1,9 @@
 package com.xinchen.ssh.demo.entity;
 
-import org.hibernate.annotations.Cascade;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity

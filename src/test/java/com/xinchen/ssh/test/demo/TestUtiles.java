@@ -10,6 +10,6 @@ public class TestUtiles {
         System.out.println(Crypt.decrypt("EB1D050F7502E958"));
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        System.out.println(passwordEncoder.encode("admin"));
+        System.out.println(passwordEncoder.encode("test"));
     }
 }

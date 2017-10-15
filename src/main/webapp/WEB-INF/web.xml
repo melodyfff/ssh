@@ -48,6 +48,11 @@
 		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
 
+	<!-- 系统启动国际环监听 -->
+	<listener>
+		<listener-class>com.xinchen.ssh.core.listener.I18nListener</listener-class>
+	</listener>
+
 	<!--spring mvc 配置-->
 	<servlet>
 		<description>spring mvc servlet</description>

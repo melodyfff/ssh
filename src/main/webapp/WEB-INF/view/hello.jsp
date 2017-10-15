@@ -14,6 +14,7 @@
 <h1>标题: ${title}</h1>
 <h1>消息 : ${message}</h1>
 <h2>国际化：<fmt:message key="hello.test"/> </h2>
+<h2>国际化数据库：<fmt:message key="my.test"/> </h2>
 <a href="<c:url value="/logout" />">Logout</a>
 
 </body>

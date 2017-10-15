@@ -1,6 +1,7 @@
 package com.xinchen.ssh.test.demo;
 
 
+import com.sun.xml.internal.ws.encoding.xml.XMLMessage;
 import com.xinchen.ssh.core.exception.ApplicationException;
 import com.xinchen.ssh.demo.dao.IUserDao;
 import com.xinchen.ssh.demo.entity.Authority;
@@ -16,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -39,6 +41,8 @@ public class TestUserService {
     @Autowired
     private IUserDao userDao;
 
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     @Qualifier("sessionFactory")
@@ -123,6 +127,13 @@ public class TestUserService {
         user.setRoleList(list);
 
         userDao.save(user);
+    }
+
+    @Test
+    public void test6(){
+        Object[] params = {"John", new GregorianCalendar().getTime()};
+        messageSource.getMessage("hello",params,Locale.ENGLISH);
+        System.out.println(messageSource.getMessage("hello.test",params,Locale.ENGLISH));
     }
 
 }  

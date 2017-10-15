@@ -104,7 +104,7 @@
 	</aop:config>
 
 	<!-- 定义国际化文件和编码 -->
-	<bean id="messageSource"  class="org.springframework.context.support.ResourceBundleMessageSource">
+	<bean id="propertiesMessageSource"  class="org.springframework.context.support.ResourceBundleMessageSource" >
 		<!-- 国际化信息所在的文件名 -->
 		<property name = "basenames">
 			<list >
@@ -116,4 +116,10 @@
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
 
-</beans>  
+	<!-- 数据库国际化资源 自定义的MessageResource -->
+	<bean id="messageSource" class="com.xinchen.ssh.core.I18n.MessageSource" >
+		<property name="parentMessageSource" ref="propertiesMessageSource"/>
+		<property name="i18nResourceDao" ref="i18nResourceDao"/>
+	</bean>
+
+</beans>
