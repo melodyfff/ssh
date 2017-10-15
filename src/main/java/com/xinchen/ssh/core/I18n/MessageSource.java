@@ -33,7 +33,7 @@ public class MessageSource extends AbstractMessageSource implements ResourceLoad
     private final Map<String, String> properties = new HashMap<String, String>();
 
     public MessageSource() {
-//        reload();
+        reload();
     }
 
     public void reload() {
@@ -43,17 +43,28 @@ public class MessageSource extends AbstractMessageSource implements ResourceLoad
 
     /**
      *
-     * 描述：TODO
      * 查询数据 虚拟数据，可以从数据库读取信息，此处省略
      * @return
      */
     private List<I18nResource> getResource(){
-        return i18nResourceDao.findAll();
+        List<I18nResource> list = new ArrayList<>();
+        I18nResource resource = new I18nResource();
+        resource.setName("my.test");
+        resource.setLanguage("en");
+        resource.setContent("hello world!");
+
+        I18nResource resource2 = new I18nResource();
+        resource2.setName("my.test");
+        resource2.setLanguage("zh");
+        resource2.setContent("你好你好{0}");
+        list.add(resource);
+        list.add(resource2);
+
+        return list;
     }
 
     /**
      *
-     * 描述：TODO
      * 加载数据
      * @return
      */
@@ -69,7 +80,6 @@ public class MessageSource extends AbstractMessageSource implements ResourceLoad
 
     /**
      *
-     * 描述：TODO
      * @param code
      * @param locale 本地化语言
      * @return
