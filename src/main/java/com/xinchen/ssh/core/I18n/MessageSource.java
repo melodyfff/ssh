@@ -33,7 +33,7 @@ public class MessageSource extends AbstractMessageSource implements ResourceLoad
     private final Map<String, String> properties = new HashMap<String, String>();
 
     public MessageSource() {
-        reload();
+//        reload();
     }
 
     public void reload() {
@@ -47,20 +47,7 @@ public class MessageSource extends AbstractMessageSource implements ResourceLoad
      * @return
      */
     private List<I18nResource> getResource(){
-        List<I18nResource> list = new ArrayList<>();
-        I18nResource resource = new I18nResource();
-        resource.setName("my.test");
-        resource.setLanguage("en");
-        resource.setContent("hello world!");
-
-        I18nResource resource2 = new I18nResource();
-        resource2.setName("my.test");
-        resource2.setLanguage("zh");
-        resource2.setContent("你好你好{0}");
-        list.add(resource);
-        list.add(resource2);
-
-        return list;
+        return i18nResourceDao.findAll();
     }
 
     /**
