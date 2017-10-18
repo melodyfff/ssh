@@ -7,6 +7,8 @@ import java.io.Serializable;
 @Table(name = "i18nResource",catalog = "ssh")
 public class I18nResource  implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue
     @Column(name = "id")

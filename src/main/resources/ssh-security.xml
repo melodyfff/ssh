@@ -9,6 +9,7 @@
 
 
     <security:http pattern="/welcome" security="none" />
+    <security:http pattern="/remote/**" security="none" />
     <!--<security:http pattern="/login" security="none"  />-->
     <!--<security:http pattern="/logout" security="none" />-->
 

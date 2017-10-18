@@ -35,7 +35,7 @@
     <bean id="taskOneJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="taskOneJobDetail" />
         <!-- 每5秒执行一次 -->
-        <property name="cronExpression" value="*/5 * * * * ? " />
+        <property name="cronExpression" value="0 0 0-2 * * ? " />
     </bean>
     <bean id="taskOneJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="durability" value="true" />

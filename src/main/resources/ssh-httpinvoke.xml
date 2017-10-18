@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
+
+	<bean id="I18nService" class="com.xinchen.ssh.demo.service.impl.I18nServiceImpl" />
+
+	<bean id="remoteReload" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="I18nService" />
+		<property name="serviceInterface" value="com.xinchen.ssh.demo.service.I18nService" />
+	</bean>
+
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<!--<property name="mappings">-->
+			<!--<props>-->
+				<!--<prop key="/reload">remoteReload</prop>-->
+			<!--</props>-->
+		<!--</property>-->
+		<property
+				name="urlMap">
+			<map>
+				<entry
+						key="/reload"
+						value-ref="remoteReload" />
+			</map>
+		</property>
+	</bean>
+
+	<!--   spring3.2.x版本为org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor  对应org.apache.commons.httpclient.HttpClient-->
+	<!--   spring4.x版本为org.springframework.remoting.httpinvoker.HttpComponentsHttpInvokerRequestExecutor 对应org.apache.http.client.HttpClient  -->
+
+	<bean id="httpInvokerRequestExecutor" class="org.springframework.remoting.httpinvoker.HttpComponentsHttpInvokerRequestExecutor">
+		<property name="connectTimeout" value="2000" />
+		<property name="readTimeout" value="5000" />
+	</bean>
+
+	<bean id="myTestService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<!--此处地址 为 http://ip:port/context/拦截器拦截的地址(DispatcherServlet)/httpinvokeUrl-->
+		<property name="serviceUrl" value="http://127.0.0.1:8080/ssh/remote/reload" />
+		<property name="serviceInterface" value="com.xinchen.ssh.demo.service.I18nService" />
+		<property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor" />
+	</bean>
+
+</beans>

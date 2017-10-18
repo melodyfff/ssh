@@ -1,18 +1,13 @@
 package com.xinchen.ssh.test.demo;
 
 
-import com.sun.xml.internal.ws.encoding.xml.XMLMessage;
-import com.xinchen.ssh.core.exception.ApplicationException;
 import com.xinchen.ssh.demo.dao.IUserDao;
 import com.xinchen.ssh.demo.entity.Authority;
 import com.xinchen.ssh.demo.entity.Role;
 import com.xinchen.ssh.demo.entity.User;
-import com.xinchen.ssh.demo.service.IUserService;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

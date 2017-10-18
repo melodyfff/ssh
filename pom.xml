@@ -7,6 +7,7 @@
 	<packaging>war</packaging>
 
 	<build>
+		<finalName>ssh</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -282,6 +283,13 @@
 			<artifactId>mockito-all</artifactId>
 			<version>1.10.8</version>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- remote invoke -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
 		</dependency>
 
 	</dependencies>

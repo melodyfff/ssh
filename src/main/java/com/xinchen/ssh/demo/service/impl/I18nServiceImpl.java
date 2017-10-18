@@ -1,28 +1,15 @@
-package com.xinchen.ssh.demo.controller;
+package com.xinchen.ssh.demo.service.impl;
 
 import com.xinchen.ssh.core.I18n.MessageSource;
 import com.xinchen.ssh.demo.service.I18nService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import javax.servlet.ServletContext;
-
-@Controller
-public class I18nController {
-
-    @Autowired
-    @Qualifier("myTestService")
-    private I18nService i18nService;
-
-    @RequestMapping("reload")
-    @ResponseBody
-    public String reload(){
+@Service("I18nService")
+public class I18nServiceImpl implements I18nService {
+    @Override
+    public void reload() {
         //------------------------------------------------------------
         // 取得ServletContext
         //------------------------------------------------------------
@@ -33,7 +20,6 @@ public class I18nController {
         //------------------------------------------------------------
         MessageSource messageSource = applicationContext.getBean(MessageSource.class);
         messageSource.reload();
-        i18nService.reload();
-        return "reload success";
+        System.out.println("reload success");
     }
 }
