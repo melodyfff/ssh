@@ -108,3 +108,21 @@ CREATE TABLE `user_role` (
 INSERT INTO `user_role` VALUES ('25', '1');
 INSERT INTO `user_role` VALUES ('25', '2');
 INSERT INTO `user_role` VALUES ('26', '2');
+
+-- ----------------------------
+-- Table structure for i18nresource
+-- ----------------------------
+DROP TABLE IF EXISTS `i18nresource`;
+CREATE TABLE `i18nresource` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `language` varchar(255) NOT NULL,
+  `content` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10547 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of i18nresource
+-- ----------------------------
+INSERT INTO `i18nresource` VALUES ('10545', 'my.test', 'en', 'hello world!');
+INSERT INTO `i18nresource` VALUES ('10546', 'my.test', 'zh', '你好你好');
