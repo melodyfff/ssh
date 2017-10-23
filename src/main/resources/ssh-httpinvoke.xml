@@ -35,11 +35,11 @@
 		<property name="readTimeout" value="5000" />
 	</bean>
 
-	<bean id="myTestService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
-		<!--此处地址 为 http://ip:port/context/拦截器拦截的地址(DispatcherServlet)/httpinvokeUrl-->
-		<property name="serviceUrl" value="http://127.0.0.1:8080/ssh/remote/reload" />
-		<property name="serviceInterface" value="com.xinchen.ssh.demo.service.I18nService" />
-		<property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor" />
-	</bean>
+	<!--<bean id="myTestService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">-->
+		<!--&lt;!&ndash;此处地址 为 http://ip:port/context/拦截器拦截的地址(DispatcherServlet)/httpinvokeUrl&ndash;&gt;-->
+		<!--<property name="serviceUrl" value="http://127.0.0.1:8080/ssh/remote/reload" />-->
+		<!--<property name="serviceInterface" value="com.xinchen.ssh.demo.service.I18nService" />-->
+		<!--<property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor" />-->
+	<!--</bean>-->
 
 </beans>

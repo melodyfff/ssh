@@ -17,7 +17,7 @@ import javax.servlet.ServletContext;
 public class I18nController {
 
     @Autowired
-    @Qualifier("myTestService")
+    @Qualifier("I18nService")
     private I18nService i18nService;
 
     @RequestMapping("reload")
@@ -34,6 +34,7 @@ public class I18nController {
         MessageSource messageSource = applicationContext.getBean(MessageSource.class);
         messageSource.reload();
         i18nService.reload();
+        i18nService.reloadOthers();
         return "reload success";
     }
 }
