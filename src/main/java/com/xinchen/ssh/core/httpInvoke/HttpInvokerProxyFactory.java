@@ -10,12 +10,15 @@ public class HttpInvokerProxyFactory <Client extends Object>{
     public Client getProxy(String serviceUrl, Class serviceInterface) {
 
         HttpComponentsHttpInvokerRequestExecutor httpComponentsHttpInvokerRequestExecutor = new HttpComponentsHttpInvokerRequestExecutor();
-        ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager();
-        cm.setMaxTotal(100);
-        HttpClient httpclient = new DefaultHttpClient(cm);
+        final HttpClient httpClient = httpComponentsHttpInvokerRequestExecutor.getHttpClient();
+//        ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager();
+//        cm.setMaxTotal(100);
+//        HttpClient httpclient = new DefaultHttpClient(cm);
+//        httpclient.getParams();
         //设置超时时间
         httpComponentsHttpInvokerRequestExecutor.setConnectTimeout(200);
-        httpComponentsHttpInvokerRequestExecutor.setHttpClient(httpclient);
+//        httpComponentsHttpInvokerRequestExecutor.setHttpClient(httpclient);
+
 
         HttpInvokerProxyFactoryBean factoryBean = new HttpInvokerProxyFactoryBean();
         factoryBean.setServiceUrl(serviceUrl);
@@ -27,7 +30,7 @@ public class HttpInvokerProxyFactory <Client extends Object>{
         return (Client) factoryBean.getObject();
     }
     /*public static void main(String[] args) {
-        String serviceUrl = "http://meiqiu.me:8080/remote/app/service";
+        String serviceUrl = "http://127.0.0.1:8080/ssh/remote/reload";
         AppService client = new HttpInvokerProxyFactory<AppService>().getProxy(md5ClientService, serviceUrl, AppService.class);
     }*/
 
