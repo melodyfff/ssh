@@ -9,6 +9,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Service("I18nService")
 public class I18nServiceImpl implements I18nService {
+
+    final static String URL = "http://127.0.0.1:8080/ssh/remote/reload";
+
     @Override
     public void reload() {
         //------------------------------------------------------------
@@ -27,7 +30,7 @@ public class I18nServiceImpl implements I18nService {
     @Override
     public void reloadOthers() {
         I18nService service = new HttpInvokerProxyFactory<I18nService>().
-                getProxy("http://127.0.0.1:8080/ssh/remote/reload",I18nService.class);
+                getProxy(URL,I18nService.class);
         service.reload();
     }
 

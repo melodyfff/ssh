@@ -1,7 +1,10 @@
 package com.xinchen.ssh.core.utils;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -20,7 +23,7 @@ public class Crypt {
     private final static String DES = "DES";
 
     // 日志对象
-    private final static transient Log logger = LogFactory.getLog(Crypt.class);
+    private final static transient Logger logger = LoggerFactory.getLogger(Crypt.class);
 
     /**
      * 加密
@@ -85,7 +88,7 @@ public class Crypt {
             return new String(decrypt(hex2byte(data.getBytes(Charset.forName("UTF-8"))),
                     PASSWORD_CRYPT_KEY.getBytes(Charset.forName("UTF-8"))),StandardCharsets.UTF_8);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -101,7 +104,7 @@ public class Crypt {
             return byte2hex(encrypt(password.getBytes(Charset.forName("UTF-8")),
                     PASSWORD_CRYPT_KEY.getBytes(Charset.forName("UTF-8"))));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -119,7 +122,7 @@ public class Crypt {
             return new String(
                     decrypt(hex2byte(data.getBytes(Charset.forName("UTF-8"))), key.getBytes(Charset.forName("UTF-8"))),StandardCharsets.UTF_8);
         } catch (Exception e) {
-            e.printStackTrace();
+           logger.error(e.getMessage());
         }
         return null;
     }
@@ -135,7 +138,7 @@ public class Crypt {
         try {
             return byte2hex(encrypt(password.getBytes(Charset.forName("UTF-8")), key.getBytes(Charset.forName("UTF-8"))));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -151,7 +154,7 @@ public class Crypt {
             return new String(decrypt(hex2byte(data.getBytes(Charset.forName("UTF-8"))),
                     DATA_CRYPT_KEY.getBytes(Charset.forName("UTF-8"))),StandardCharsets.UTF_8);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return null;
     }
@@ -167,7 +170,7 @@ public class Crypt {
             return byte2hex(encrypt(password.getBytes(Charset.forName("UTF-8")),
                     DATA_CRYPT_KEY.getBytes(Charset.forName("UTF-8"))));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return null;
     }

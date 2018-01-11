@@ -10,7 +10,7 @@ public class HttpInvokerProxyFactory <Client extends Object>{
     public Client getProxy(String serviceUrl, Class serviceInterface) {
 
         HttpComponentsHttpInvokerRequestExecutor httpComponentsHttpInvokerRequestExecutor = new HttpComponentsHttpInvokerRequestExecutor();
-        final HttpClient httpClient = httpComponentsHttpInvokerRequestExecutor.getHttpClient();
+//        final HttpClient httpClient = httpComponentsHttpInvokerRequestExecutor.getHttpClient();
 //        ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager();
 //        cm.setMaxTotal(100);
 //        HttpClient httpclient = new DefaultHttpClient(cm);
