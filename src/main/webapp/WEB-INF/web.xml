@@ -1,134 +1,240 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	version="2.5">
-	<display-name>ssh</display-name>
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+    <display-name>ssh</display-name>
 
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			classpath:ssh-context.xml
-			classpath:ssh-security.xml
-			classpath:ssh-scheduler.xml
-			classpath:ssh-httpinvoke.xml
-		</param-value>
-	</context-param>
-
-	<filter>
-		<filter-name>encodingFilter</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>utf-8</param-value>
-		</init-param>
-		<init-param>
-			<param-name>forceEncoding</param-name>
-			<param-value>true</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>encodingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:ssh-context.xml
+            classpath:ssh-security.xml
+            <!--classpath:ssh-scheduler.xml-->
+            classpath:ssh-httpinvoke.xml
+        </param-value>
+    </context-param>
 
 
+    <!-- 监听servletContext，启动contextConfigLocation中的spring配置信息 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
-	<!-- 监听servletContext，启动contextConfigLocation中的spring配置信息 -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+    <!-- 防止spring内存溢出监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
 
-	<!-- 防止spring内存溢出监听器 -->
-	<listener>
-		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-	</listener>
+    <!--监听 session 会话个数-->
+    <listener>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
 
-	<!--监听 session 会话个数-->
-	<listener>
-		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
-	</listener>
+    <!-- 系统启动国际环监听 -->
+    <listener>
+        <listener-class>com.xinchen.ssh.core.listener.I18nListener</listener-class>
+    </listener>
 
-	<!-- 系统启动国际环监听 -->
-	<listener>
-		<listener-class>com.xinchen.ssh.core.listener.I18nListener</listener-class>
-	</listener>
+    <!--spring mvc 配置-->
+    <servlet>
+        <description>spring mvc servlet</description>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <!-- 此处配置的是SpringMVC的配置文件 -->
+            <param-value>classpath:ssh-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
-	<!--spring mvc 配置-->
-	<servlet>
-		<description>spring mvc servlet</description>
-		<servlet-name>dispatcherServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<!-- 此处配置的是SpringMVC的配置文件 -->
-			<param-value>classpath:ssh-mvc.xml</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!-- 	<servlet-mapping>
+            <servlet-name>rest</servlet-name>
+            <url-pattern>*.htmls</url-pattern>
+        </servlet-mapping> -->
 
-	<servlet-mapping>
-		<servlet-name>dispatcherServlet</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-<!-- 	<servlet-mapping>
-		<servlet-name>rest</servlet-name>
-		<url-pattern>*.htmls</url-pattern>
-	</servlet-mapping> -->
-
-	<servlet>
-		<servlet-name>service</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:ssh-httpinvoke.xml</param-value>
-		</init-param>
-		<load-on-startup>2</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>service</servlet-name>
-		<url-pattern>/remote/*</url-pattern>
-	</servlet-mapping>
-
-
-	<!-- openSessionInView配置 作用是延迟session关闭到view层 -->
-	<!--解决报错：could not initialize proxy - no Session-->
-	<filter>
-		<filter-name>openSessionInViewFilter</filter-name>
-		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
-	<!-- <init-param> <param-name>singleSession</param-name> <param-value>true</param-value> 
-		</init-param> -->
-	</filter>
-	<filter-mapping>
-		<filter-name>openSessionInViewFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-<!-- 	<filter-mapping>
-		<filter-name>openSessionInViewFilter</filter-name>
-		<url-pattern>*.htmls</url-pattern>
-	</filter-mapping> -->
+    <servlet>
+        <servlet-name>service</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:ssh-httpinvoke.xml</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>service</servlet-name>
+        <url-pattern>/remote/*</url-pattern>
+    </servlet-mapping>
 
 
-	<!-- Spring Security -->
-	<filter>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<filter-class>
-			org.springframework.web.filter.DelegatingFilterProxy
-		</filter-class>
-	</filter>
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
 
-	<filter-mapping>
-		<filter-name>springSecurityFilterChain</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- openSessionInView配置 作用是延迟session关闭到view层 -->
+    <!--解决报错：could not initialize proxy - no Session-->
+    <filter>
+        <filter-name>openSessionInViewFilter</filter-name>
+        <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+        <!-- <init-param> <param-name>singleSession</param-name> <param-value>true</param-value>
+            </init-param> -->
+    </filter>
+    <filter-mapping>
+        <filter-name>openSessionInViewFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- 	<filter-mapping>
+            <filter-name>openSessionInViewFilter</filter-name>
+            <url-pattern>*.htmls</url-pattern>
+        </filter-mapping> -->
+
+    <!-- Spring Security -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>
+            org.springframework.web.filter.DelegatingFilterProxy
+        </filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--CAS 单点登录-->
+
+    <filter>
+        <filter-name>CAS Single Sign Out Filter</filter-name>
+        <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+        <init-param>
+            <param-name>casServerUrlPrefix</param-name>
+            <param-value>http://localhost:8443/cas</param-value>
+        </init-param>
+        <!--<init-param>-->
+            <!--<param-name>serverName</param-name>-->
+            <!--<param-value>http://localhost:8080</param-value>-->
+        <!--</init-param>-->
+    </filter>
+
+    <!--
+      - Loads the root application context of this web app at startup.
+      - The application context is then available via
+      - WebApplicationContextUtils.getWebApplicationContext(servletContext).-->
+    <listener>
+        <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+    </listener>
+
+    <!--<filter>-->
+        <!--<filter-name>CAS Authentication Filter</filter-name>-->
+        <!--&lt;!&ndash;<filter-class>org.jasig.cas.client.authentication.Saml11AuthenticationFilter</filter-class>&ndash;&gt;-->
+        <!--<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>casServerLoginUrl</param-name>-->
+            <!--<param-value>http://localhost:8443/cas/login</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>serverName</param-name>-->
+            <!--<param-value>http://localhost:8080</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>ignorePattern</param-name>-->
+            <!--<param-value>.*</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
 
 
-	<!-- 配置session超时时间，单位分钟 -->
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>
+    <!--<filter>-->
+        <!--<filter-name>CAS Validation Filter</filter-name>-->
+        <!--&lt;!&ndash;<filter-class>org.jasig.cas.client.validation.Saml11TicketValidationFilter</filter-class>&ndash;&gt;-->
+        <!--<filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>casServerUrlPrefix</param-name>-->
+            <!--<param-value>http://localhost:8443/cas</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>serverName</param-name>-->
+            <!--<param-value>http://localhost:8080</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>redirectAfterValidation</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>useSession</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+        <!--&lt;!&ndash;-->
+        <!--<init-param>-->
+            <!--<param-name>acceptAnyProxy</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>proxyReceptorUrl</param-name>-->
+            <!--<param-value>/sample/proxyUrl</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>proxyCallbackUrl</param-name>-->
+            <!--<param-value>https://mmoayyed.unicon.net:9443/sample/proxyUrl</param-value>-->
+        <!--</init-param>-->
+        <!--&ndash;&gt;-->
+        <!--<init-param>-->
+            <!--<param-name>authn_method</param-name>-->
+            <!--<param-value>mfa-duo</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
 
-	<welcome-file-list>
-		<welcome-file>/index.jsp</welcome-file>
-	</welcome-file-list>
+    <!--<filter>-->
+        <!--<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>-->
+        <!--<filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>-->
+    <!--</filter>-->
+
+    <filter-mapping>
+        <filter-name>CAS Single Sign Out Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--<filter-mapping>-->
+        <!--<filter-name>CAS Validation Filter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <!--<filter-mapping>-->
+        <!--<filter-name>CAS Authentication Filter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <!--<filter-mapping>-->
+        <!--<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+
+    <!-- 配置session超时时间，单位分钟 -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>/index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>
