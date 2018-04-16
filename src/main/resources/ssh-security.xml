@@ -29,8 +29,11 @@
                 authentication-failure-url="/login?error"
                 username-parameter="username"
                 password-parameter="password" />
+        <!--<logout logout-url="/j_spring_security_logout"-->
+                <!--logout-success-url="/login?logout"-->
+                <!--delete-cookies="JSESSIONID" />-->
         <logout logout-url="/j_spring_security_logout"
-                logout-success-url="/login?logout"
+                logout-success-url="http://localhost:8443/cas/logout"
                 delete-cookies="JSESSIONID" />
         <!-- enable csrf protection -->
         <csrf/>
