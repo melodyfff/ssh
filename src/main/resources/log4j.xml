@@ -74,7 +74,7 @@
     </logger>
 
     <root>
-        <priority value="DEBUG"/>
+        <priority value="INFO"/>
         <!--<level value="ALL"/>-->
         <appender-ref ref="consoleAppender" />
         <appender-ref ref="fileAppenderInfo" />
