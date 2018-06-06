@@ -76,4 +76,11 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
         return this.securityMetadataSource;
     }
 
+    public FilterInvocationSecurityMetadataSource getSecurityMetadataSource() {
+        return securityMetadataSource;
+    }
+
+    public void setSecurityMetadataSource(FilterInvocationSecurityMetadataSource securityMetadataSource) {
+        this.securityMetadataSource = securityMetadataSource;
+    }
 }

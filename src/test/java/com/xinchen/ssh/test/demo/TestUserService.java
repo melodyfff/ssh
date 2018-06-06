@@ -43,7 +43,7 @@ public class TestUserService {
     @Qualifier("sessionFactory")
     private SessionFactory sessionFactory;
   
-//    @Test
+//    @Tests
 //    public void save() {
 //        AcctUser acctUser = new AcctUser();
 //        acctUser.setId(UUID.randomUUID().toString());

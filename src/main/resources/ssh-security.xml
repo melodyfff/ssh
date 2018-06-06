@@ -17,7 +17,7 @@
     <!--<security:http pattern="/login" security="none"  />-->
     <!--<security:http pattern="/logout" security="none" />-->
 
-    <http auto-config="true" entry-point-ref="casProcessingFilterEntryPoint">
+    <http auto-config="true" entry-point-ref="casEntryPoint">
         <intercept-url pattern="/index"  />
         <intercept-url pattern="/login"  access="permitAll()"/>
         <intercept-url pattern="/logout"  access="permitAll()" />
@@ -47,7 +47,7 @@
         <access-denied-handler error-page="/403.jsp"/>
 
         <!--添加自定义的过滤器 放在FILTER_SECURITY_INTERCEPTOR之前有效 -->
-        <custom-filter position="CAS_FILTER" ref="casAuthenticationFilter" />
+        <custom-filter position="CAS_FILTER" ref="casFilter" />
         <custom-filter ref="customFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
         <!-- 登出过滤器 -->
         <custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER" />
@@ -80,14 +80,14 @@
     <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     <!--<beans:bean id="customUserDetailsService" class="com.xinchen.ssh.core.security.CustomUserDetailsService" />-->
 
-    <beans:bean id="casProcessingFilterEntryPoint" class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
+    <beans:bean id="casEntryPoint" class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
         <!-- 单点登录服务器登录URL -->
         <beans:property name="loginUrl" value="http://localhost:8443/cas/login"/>
 
         <beans:property name="serviceProperties" ref="serviceProperties"/>
     </beans:bean>
 
-    <beans:bean id="casAuthenticationFilter" class="org.springframework.security.cas.web.CasAuthenticationFilter">
+    <beans:bean id="casFilter" class="org.springframework.security.cas.web.CasAuthenticationFilter">
         <beans:property name="authenticationManager" ref="casAuthenticationManager"/>
         <!-- 认证失败返回的页面(非403错误)
         <property name="authenticationFailureHandler">
@@ -130,12 +130,15 @@
 
     <!-- 注销服务器端 -->
     <beans:bean id="requestSingleLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
-        <beans:constructor-arg value="http://localhost:8080/ssh/logout" />
+        <beans:constructor-arg value="http://localhost:8443/cas/logout" />
         <beans:constructor-arg>
             <beans:bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
         </beans:constructor-arg>
-        <beans:property name="filterProcessesUrl" value="/j_spring_cas_security_logout" />
+        <beans:property name="filterProcessesUrl" value="/logout/cas" />
     </beans:bean>
     <!-- 注销客户端 -->
     <beans:bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter" />
+
+    <!-- 配置ProxyGrantingTicketStorage，用以保存pgtId和pgtIou -->
+    <bean id="proxyGrantingTicketStorage" class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
 </beans:beans>

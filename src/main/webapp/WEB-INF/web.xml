@@ -139,23 +139,23 @@
     </listener>
     <!--CAS 单点登录-->
     <!--用来控制cas识别的session的保存，以及判断是否是登出请求-->
-    <filter>
-        <filter-name>CAS Single Sign Out Filter</filter-name>
-        <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
-        <init-param>
-            <param-name>casServerUrlPrefix</param-name>
-            <!--这个地址要和keystore中的CN一致，端口无所谓，域名必须一致，前边我在hosts里面配置了这个域名映射，所以实际上访问的是127.0.0.1-->
-            <param-value>http://localhost:8443/cas</param-value>
-        </init-param>
+    <!--<filter>-->
+        <!--<filter-name>CAS Single Sign Out Filter</filter-name>-->
+        <!--<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>-->
         <!--<init-param>-->
-            <!--<param-name>serverName</param-name>-->
-            <!--<param-value>http://localhost:8080</param-value>-->
+            <!--<param-name>casServerUrlPrefix</param-name>-->
+            <!--&lt;!&ndash;这个地址要和keystore中的CN一致，端口无所谓，域名必须一致，前边我在hosts里面配置了这个域名映射，所以实际上访问的是127.0.0.1&ndash;&gt;-->
+            <!--<param-value>http://localhost:8443/cas</param-value>-->
         <!--</init-param>-->
-    </filter>
-    <filter-mapping>
-        <filter-name>CAS Single Sign Out Filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+        <!--&lt;!&ndash;<init-param>&ndash;&gt;-->
+            <!--&lt;!&ndash;<param-name>serverName</param-name>&ndash;&gt;-->
+            <!--&lt;!&ndash;<param-value>http://localhost:8080</param-value>&ndash;&gt;-->
+        <!--&lt;!&ndash;</init-param>&ndash;&gt;-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>CAS Single Sign Out Filter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
 
 
