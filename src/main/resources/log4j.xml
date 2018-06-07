@@ -72,6 +72,12 @@
         <level value="INFO"></level>
         <!--<appender-ref ref="consoleAppender" />-->
     </logger>
+    <!--输出单点认证日志-->
+    <logger name="org.jasig.cas.client" >  <!--  additivity="false" 不在控制台输出-->
+        <level value="debug"></level>
+        <!--<appender-ref ref="consoleAppender" />-->
+    </logger>
+
 
     <root>
         <priority value="INFO"/>

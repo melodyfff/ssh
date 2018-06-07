@@ -149,7 +149,7 @@
         <!--</init-param>-->
         <!--&lt;!&ndash;<init-param>&ndash;&gt;-->
             <!--&lt;!&ndash;<param-name>serverName</param-name>&ndash;&gt;-->
-            <!--&lt;!&ndash;<param-value>http://localhost:8080</param-value>&ndash;&gt;-->
+            <!--&lt;!&ndash;<param-value>http://localhost:8180</param-value>&ndash;&gt;-->
         <!--&lt;!&ndash;</init-param>&ndash;&gt;-->
     <!--</filter>-->
     <!--<filter-mapping>-->
@@ -159,74 +159,72 @@
 
 
 
-    <!--<filter>-->
-        <!--<filter-name>CAS Authentication Filter</filter-name>-->
-        <!--&lt;!&ndash;<filter-class>org.jasig.cas.client.authentication.Saml11AuthenticationFilter</filter-class>&ndash;&gt;-->
-        <!--<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>-->
-        <!--<init-param>-->
-            <!--<param-name>casServerLoginUrl</param-name>-->
-            <!--<param-value>http://localhost:8443/cas/login</param-value>-->
-        <!--</init-param>-->
-        <!--&lt;!&ndash;<init-param>&ndash;&gt;-->
-            <!--&lt;!&ndash;<param-name>serverName</param-name>&ndash;&gt;-->
-            <!--&lt;!&ndash;<param-value>http://localhost:8080</param-value>&ndash;&gt;-->
-        <!--&lt;!&ndash;</init-param>&ndash;&gt;-->
-        <!--&lt;!&ndash;<init-param>&ndash;&gt;-->
-            <!--&lt;!&ndash;<param-name>ignorePattern</param-name>&ndash;&gt;-->
-            <!--&lt;!&ndash;<param-value>.*</param-value>&ndash;&gt;-->
-        <!--&lt;!&ndash;</init-param>&ndash;&gt;-->
-    <!--</filter>-->
+    <filter>
+        <filter-name>CAS Authentication Filter</filter-name>
+        <filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
+        <init-param>
+            <param-name>casServerLoginUrl</param-name>
+            <param-value>http://localhost:8443/cas/login</param-value>
+        </init-param>
+        <init-param>
+            <param-name>serverName</param-name>
+            <param-value>http://localhost:8180</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ignorePattern</param-name>
+            <param-value>.js|.css</param-value>
+        </init-param>
+    </filter>
 
-    <!--<filter-mapping>-->
-        <!--<filter-name>CAS Authentication Filter</filter-name>-->
-        <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <filter-mapping>
+        <filter-name>CAS Authentication Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 
-    <!--<filter>-->
-        <!--<filter-name>CAS Validation Filter</filter-name>-->
-        <!--&lt;!&ndash;<filter-class>org.jasig.cas.client.validation.Saml11TicketValidationFilter</filter-class>&ndash;&gt;-->
-        <!--<filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>-->
-        <!--<init-param>-->
-            <!--<param-name>casServerUrlPrefix</param-name>-->
-            <!--<param-value>http://localhost:8443/cas</param-value>-->
-        <!--</init-param>-->
-        <!--&lt;!&ndash;<init-param>&ndash;&gt;-->
-            <!--&lt;!&ndash;<param-name>serverName</param-name>&ndash;&gt;-->
-            <!--&lt;!&ndash;<param-value>http://localhost:8080</param-value>&ndash;&gt;-->
-        <!--&lt;!&ndash;</init-param>&ndash;&gt;-->
-        <!--<init-param>-->
-            <!--<param-name>redirectAfterValidation</param-name>-->
-            <!--<param-value>true</param-value>-->
-        <!--</init-param>-->
-        <!--<init-param>-->
-            <!--<param-name>useSession</param-name>-->
-            <!--<param-value>true</param-value>-->
-        <!--</init-param>-->
-        <!--&lt;!&ndash;-->
-        <!--<init-param>-->
-            <!--<param-name>acceptAnyProxy</param-name>-->
-            <!--<param-value>true</param-value>-->
-        <!--</init-param>-->
-        <!--<init-param>-->
-            <!--<param-name>proxyReceptorUrl</param-name>-->
-            <!--<param-value>/sample/proxyUrl</param-value>-->
-        <!--</init-param>-->
-        <!--<init-param>-->
-            <!--<param-name>proxyCallbackUrl</param-name>-->
-            <!--<param-value>https://mmoayyed.unicon.net:9443/sample/proxyUrl</param-value>-->
-        <!--</init-param>-->
-        <!--&ndash;&gt;-->
+    <filter>
+        <filter-name>CAS Validation Filter</filter-name>
+        <filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>
+        <init-param>
+            <param-name>casServerUrlPrefix</param-name>
+            <param-value>http://localhost:8443/cas</param-value>
+        </init-param>
+        <init-param>
+            <param-name>serverName</param-name>
+            <param-value>http://localhost:8180</param-value>
+        </init-param>
+        <init-param>
+            <param-name>redirectAfterValidation</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>useSession</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <!--
+        <init-param>
+            <param-name>acceptAnyProxy</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyReceptorUrl</param-name>
+            <param-value>/sample/proxyUrl</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxyCallbackUrl</param-name>
+            <param-value>https://mmoayyed.unicon.net:9443/sample/proxyUrl</param-value>
+        </init-param>
+        -->
         <!--<init-param>-->
             <!--<param-name>authn_method</param-name>-->
             <!--<param-value>mfa-duo</param-value>-->
         <!--</init-param>-->
-    <!--</filter>-->
+    </filter>
 
-    <!--<filter-mapping>-->
-    <!--<filter-name>CAS Validation Filter</filter-name>-->
-    <!--<url-pattern>/*</url-pattern>-->
-    <!--</filter-mapping>-->
+    <filter-mapping>
+    <filter-name>CAS Validation Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <!--<filter>-->
         <!--<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>-->
