@@ -147,7 +147,8 @@ public abstract class AbstractAuthenticationProcessingFilter extends GenericFilt
             }
 
 //            request.getRequestDispatcher("/gotoadmin").forward(request,response);
-            response.sendRedirect("/ssh/admin");
+            response.setHeader("CAS","cas");
+            response.sendRedirect("/ssh/admin?CAS=CAS");
             return;
         }
 

@@ -6,6 +6,7 @@ import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,10 @@ public class CasAuthenticationEntryPoint implements AuthenticationEntryPoint, In
         String redirectUrl = this.createRedirectUrl(urlEncodedService);
         this.preCommence(servletRequest, response);
         // 写死
-//        redirectUrl = "http://localhost:8180/ssh/login";
+        String way = servletRequest.getParameter("CAS");
+        if (StringUtils.isEmpty(way)){
+            redirectUrl = "http://localhost:8180/ssh/login";
+        }
         response.sendRedirect(redirectUrl);
     }
 
