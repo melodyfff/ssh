@@ -90,7 +90,32 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.pac4j/pac4j-cas -->
+		<dependency>
+			<groupId>org.pac4j</groupId>
+			<artifactId>pac4j-cas</artifactId>
+			<version>3.0.0</version>
+			<!--<scope>runtime</scope>-->
+		</dependency>
+		<!--&lt;!&ndash; https://mvnrepository.com/artifact/org.pac4j/pac4j-http &ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>org.pac4j</groupId>-->
+			<!--<artifactId>pac4j-http</artifactId>-->
+			<!--<version>3.0.0</version>-->
+		<!--</dependency>-->
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.11.2</version>
+		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.pac4j/pac4j-config -->
+		<dependency>
+			<groupId>org.pac4j</groupId>
+			<artifactId>pac4j-config</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>

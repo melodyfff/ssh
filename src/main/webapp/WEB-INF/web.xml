@@ -145,7 +145,7 @@
         <!--<init-param>-->
             <!--<param-name>casServerUrlPrefix</param-name>-->
             <!--&lt;!&ndash;这个地址要和keystore中的CN一致，端口无所谓，域名必须一致，前边我在hosts里面配置了这个域名映射，所以实际上访问的是127.0.0.1&ndash;&gt;-->
-            <!--<param-value>http://localhost:8443/cas</param-value>-->
+            <!--<param-value>http://localhost:9443/cas</param-value>-->
         <!--</init-param>-->
         <!--&lt;!&ndash;<init-param>&ndash;&gt;-->
             <!--&lt;!&ndash;<param-name>serverName</param-name>&ndash;&gt;-->
@@ -161,10 +161,10 @@
 
     <filter>
         <filter-name>CAS Authentication Filter</filter-name>
-        <filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
+        <filter-class>com.xinchen.ssh.core.filter.AuthenticationFilter</filter-class>
         <init-param>
             <param-name>casServerLoginUrl</param-name>
-            <param-value>http://localhost:8443/cas/login</param-value>
+            <param-value>http://localhost:9443/cas/login</param-value>
         </init-param>
         <init-param>
             <param-name>serverName</param-name>
@@ -172,7 +172,7 @@
         </init-param>
         <init-param>
             <param-name>ignorePattern</param-name>
-            <param-value>.js|.css</param-value>
+            <param-value>.js|.css|/welcome*|/login*</param-value>
         </init-param>
     </filter>
 
@@ -187,7 +187,7 @@
         <filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>
         <init-param>
             <param-name>casServerUrlPrefix</param-name>
-            <param-value>http://localhost:8443/cas</param-value>
+            <param-value>http://localhost:9443/cas</param-value>
         </init-param>
         <init-param>
             <param-name>serverName</param-name>
