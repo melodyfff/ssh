@@ -33,7 +33,7 @@
                 <!--logout-success-url="/login?logout"-->
                 <!--delete-cookies="JSESSIONID" />-->
         <logout logout-url="/j_spring_security_logout"
-                logout-success-url="http://localhost:9443/cas/logout"
+                logout-success-url="http://localhost:8443/cas/logout"
                 delete-cookies="JSESSIONID" />
         <!-- enable csrf protection -->
         <csrf/>
@@ -80,15 +80,14 @@
     <beans:bean id="bcryptEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     <!--<beans:bean id="customUserDetailsService" class="com.xinchen.ssh.core.security.CustomUserDetailsService" />-->
 
-    <beans:bean id="casEntryPoint" class="com.xinchen.ssh.core.filter.CasAuthenticationEntryPoint">
+    <beans:bean id="casEntryPoint" class="org.springframework.security.cas.web.CasAuthenticationEntryPoint">
         <!-- 单点登录服务器登录URL -->
-        <!--<beans:property name="loginUrl" value="http://localhost:9443/cas/login"/>-->
-        <beans:property name="loginUrl" value="http://localhost:9443/cas/login"/>
+        <beans:property name="loginUrl" value="http://localhost:8443/cas/login"/>
 
         <beans:property name="serviceProperties" ref="serviceProperties"/>
     </beans:bean>
 
-    <beans:bean id="casFilter" class="com.xinchen.ssh.core.filter.CasAuthenticationFilter">
+    <beans:bean id="casFilter" class="org.springframework.security.cas.web.CasAuthenticationFilter">
         <beans:property name="authenticationManager" ref="casAuthenticationManager"/>
         <!-- 认证失败返回的页面(非403错误)
         <property name="authenticationFailureHandler">
@@ -113,9 +112,9 @@
         <beans:property name="ticketValidator">
             <beans:bean class="org.jasig.cas.client.validation.Cas30ServiceTicketValidator">
                 <!--http://localhost:9443/cas 这里一定要写成 http://localhost:9443/cas  否则会报
-                HTTP Status 500 - java.io.FileNotFoundException: http://localhost:9443/cas/login/serviceValidate?ticket=ST-6-guYjgLCryfN5OMMA1MRQ-MELODY&service=http%3A%2F%2Flocalhost%3A8080%2Fssh%2Flogin%2Fcas
+                HTTP Status 500 - java.io.FileNotFoundException: http://localhost:8443/cas/login/serviceValidate?ticket=ST-6-guYjgLCryfN5OMMA1MRQ-MELODY&service=http%3A%2F%2Flocalhost%3A8080%2Fssh%2Flogin%2Fcas
                 -->
-                <beans:constructor-arg index="0" value="http://localhost:9443/cas"/>
+                <beans:constructor-arg index="0" value="http://localhost:8443/cas"/>
             </beans:bean>
         </beans:property>
         <beans:property name="key" value="an_id_for_this_auth_provider_only"/>
@@ -131,7 +130,7 @@
 
     <!-- 注销服务器端 -->
     <beans:bean id="requestSingleLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter">
-        <beans:constructor-arg value="http://localhost:9443/cas/logout" />
+        <beans:constructor-arg value="http://localhost:8443/cas/logout" />
         <beans:constructor-arg>
             <beans:bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler" />
         </beans:constructor-arg>
