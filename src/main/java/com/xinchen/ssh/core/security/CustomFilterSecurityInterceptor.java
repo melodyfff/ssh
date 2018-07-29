@@ -30,7 +30,7 @@ public class CustomFilterSecurityInterceptor extends AbstractSecurityInterceptor
     }
 
     @Autowired
-    @Qualifier("authenticationManager")
+    @Qualifier("casAuthenticationManager")
     @Override
     public void setAuthenticationManager(AuthenticationManager newManager) {
         super.setAuthenticationManager(newManager);

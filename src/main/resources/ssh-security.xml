@@ -21,33 +21,38 @@
         <intercept-url pattern="/index"  />
         <intercept-url pattern="/login"  access="permitAll()"/>
         <intercept-url pattern="/logout"  access="permitAll()" />
+        <!--<intercept-url pattern="/**?ticket=**" access="permitAll()" />-->
         <intercept-url pattern="/admin**" access="isAuthenticated()" />
         <!--authentication-success-handler-ref="customSuccessHandler"-->
-        <form-login
-                login-page="/login"
-                default-target-url="/welcome"
-                authentication-failure-url="/login?error"
-                username-parameter="username"
-                password-parameter="password" />
+        <!--<form-login-->
+                <!--login-page="/login"-->
+                <!--default-target-url="/welcome"-->
+                <!--authentication-failure-url="/login?error"-->
+                <!--username-parameter="username"-->
+                <!--password-parameter="password" />-->
         <!--<logout logout-url="/j_spring_security_logout"-->
                 <!--logout-success-url="/login?logout"-->
                 <!--delete-cookies="JSESSIONID" />-->
-        <logout logout-url="/j_spring_security_logout"
-                logout-success-url="http://localhost:8443/cas/logout"
-                delete-cookies="JSESSIONID" />
+        <logout logout-url="/logout/cas"
+                logout-success-url="http://localhost:8180/ssh/" invalidate-session="true"
+                delete-cookies="JSESSIONID,SESSIONID" />
         <!-- enable csrf protection -->
         <csrf/>
 
         <!--session 超时跳转页面-->
-        <session-management invalid-session-url="/login" >
-            <concurrency-control max-sessions="1" />
+        <session-management   session-authentication-strategy-ref="sas">
+            <!--<concurrency-control max-sessions="1" />-->
         </session-management>
 
         <!--无权访问403页面-->
         <access-denied-handler error-page="/403.jsp"/>
 
         <!--添加自定义的过滤器 放在FILTER_SECURITY_INTERCEPTOR之前有效 -->
+        <!-- 当前用户session拦截器  -->
+        <sec:custom-filter ref="concurrencyFilter" position="CONCURRENT_SESSION_FILTER"/>
+
         <custom-filter position="CAS_FILTER" ref="casFilter" />
+        <!-- 权限过滤器 -->
         <custom-filter ref="customFilterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
         <!-- 登出过滤器 -->
         <custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER" />
@@ -59,7 +64,7 @@
     <!--<security:global-method-security pre-post-annotations="enabled" proxy-target-class="true" />-->
 
     <!--<beans:bean id="customFilterSecurityInterceptor" class="com.xinchen.ssh.core.security.CustomFilterSecurityInterceptor">-->
-        <!--<beans:property name="authenticationManager" ref="authenticationManager" />-->
+        <!--<beans:property name="authenticationManager" ref="casAuthenticationManager" />-->
         <!--<beans:property name="accessDecisionManager" ref="customAccessDecisionManager" />-->
         <!--<beans:property name="securityMetadataSource" ref="customSecurityMetadataSource" />-->
     <!--</beans:bean>-->
@@ -95,10 +100,14 @@
                 <property name="defaultFailureUrl" value="/static/html/errors/403.html"/>
             </bean>
         </property>-->
-        <!-- 认证成功返回的页面，此处做了修改，这个类是继续之前的操作。默认的类是设置一个固定的页面
-        <property name="authenticationSuccessHandler">
-            <bean class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler"/>
-        </property>-->
+        <!-- 认证成功返回的页面，此处做了修改，这个类是继续之前的操作。默认的类是设置一个固定的页面-->
+        <beans:property name="authenticationSuccessHandler">
+            <beans:bean class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+                <beans:property name="defaultTargetUrl" value="/admin"/>
+            </beans:bean>
+        </beans:property>
+        <beans:property name="sessionAuthenticationStrategy" ref="sas"/>
+
     </beans:bean>
 
     <beans:bean id="casAuthenticationProvider"
@@ -138,5 +147,32 @@
     </beans:bean>
     <!-- 注销客户端 -->
     <beans:bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter" />
+
+
+
+
+    <!--  设置允许登录的session最大数 -->
+    <beans:bean id="concurrencyFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
+        <beans:constructor-arg name="sessionRegistry" ref="sessionRegistry" />
+        <!--<beans:constructor-arg name="expiredUrl" value="/logout/cas" />-->
+    </beans:bean>
+
+    <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+    <beans:bean id="sas" class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+        <beans:constructor-arg>
+            <beans:list>
+                <beans:bean class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+                    <beans:constructor-arg ref="sessionRegistry"/>
+                    <beans:property name="maximumSessions" value="1" />
+                    <!--<beans:property name="exceptionIfMaximumExceeded" value="true" />-->
+                </beans:bean>
+                <beans:bean class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy">
+                </beans:bean>
+                <beans:bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+                    <beans:constructor-arg ref="sessionRegistry"/>
+                </beans:bean>
+            </beans:list>
+        </beans:constructor-arg>
+    </beans:bean>
 
 </beans:beans>

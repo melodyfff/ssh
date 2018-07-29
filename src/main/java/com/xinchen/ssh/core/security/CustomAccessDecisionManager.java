@@ -3,7 +3,9 @@ package com.xinchen.ssh.core.security;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.cas.authentication.CasAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -31,12 +33,12 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
 
         ConfigAttribute c;
         String needRole;
-
         for(Iterator<ConfigAttribute> iter = collection.iterator(); iter.hasNext(); ) {
             c = iter.next();
             needRole = c.getAttribute();
             //authentication 为在注释1 中循环添加到 GrantedAuthority 对象中的权限信息集合
             for(GrantedAuthority ga : authentication.getAuthorities()) {
+//                if (c instanceof WebExpressionConfigAttribute)
                 if(needRole.trim().equals(ga.getAuthority())) {
                     return;
                 }

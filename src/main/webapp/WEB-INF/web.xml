@@ -10,7 +10,7 @@
         <param-value>
             classpath:ssh-context.xml
             classpath:ssh-security.xml
-            classpath:ssh-redis.xml
+            <!--classpath:ssh-redis.xml-->
             <!--classpath:ssh-scheduler.xml-->
             classpath:ssh-httpinvoke.xml
         </param-value>
@@ -92,14 +92,14 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <filter>
-        <filter-name>springSessionRepositoryFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>springSessionRepositoryFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <!--<filter>-->
+        <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
+        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
     <!-- openSessionInView配置 作用是延迟session关闭到view层 -->
     <!--解决报错：could not initialize proxy - no Session-->
@@ -159,48 +159,48 @@
 
 
 
-    <filter>
-        <filter-name>CAS Authentication Filter</filter-name>
-        <filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
-        <init-param>
-            <param-name>casServerLoginUrl</param-name>
-            <param-value>http://localhost:8443/cas/login</param-value>
-        </init-param>
-        <init-param>
-            <param-name>serverName</param-name>
-            <param-value>http://localhost:8180</param-value>
-        </init-param>
-        <init-param>
-            <param-name>ignorePattern</param-name>
-            <param-value>.js|.css</param-value>
-        </init-param>
-    </filter>
+    <!--<filter>-->
+        <!--<filter-name>CAS Authentication Filter</filter-name>-->
+        <!--<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>casServerLoginUrl</param-name>-->
+            <!--<param-value>http://localhost:8443/cas/login</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>serverName</param-name>-->
+            <!--<param-value>http://localhost:8180</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>ignorePattern</param-name>-->
+            <!--<param-value>.js|.css</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
 
-    <filter-mapping>
-        <filter-name>CAS Authentication Filter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>CAS Authentication Filter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
 
-    <filter>
-        <filter-name>CAS Validation Filter</filter-name>
-        <filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>
-        <init-param>
-            <param-name>casServerUrlPrefix</param-name>
-            <param-value>http://localhost:8443/cas</param-value>
-        </init-param>
-        <init-param>
-            <param-name>serverName</param-name>
-            <param-value>http://localhost:8180</param-value>
-        </init-param>
-        <init-param>
-            <param-name>redirectAfterValidation</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>useSession</param-name>
-            <param-value>true</param-value>
-        </init-param>
+    <!--<filter>-->
+        <!--<filter-name>CAS Validation Filter</filter-name>-->
+        <!--<filter-class>org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>casServerUrlPrefix</param-name>-->
+            <!--<param-value>http://localhost:8443/cas</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>serverName</param-name>-->
+            <!--<param-value>http://localhost:8180</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>redirectAfterValidation</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>useSession</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
         <!--
         <init-param>
             <param-name>acceptAnyProxy</param-name>
@@ -219,12 +219,12 @@
             <!--<param-name>authn_method</param-name>-->
             <!--<param-value>mfa-duo</param-value>-->
         <!--</init-param>-->
-    </filter>
+    <!--</filter>-->
 
-    <filter-mapping>
-    <filter-name>CAS Validation Filter</filter-name>
-    <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <!--<filter-mapping>-->
+    <!--<filter-name>CAS Validation Filter</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
     <!--<filter>-->
         <!--<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>-->
